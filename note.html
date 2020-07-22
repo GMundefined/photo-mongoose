@@ -4,3 +4,31 @@
 # npm命令是从国外服务器下载安装模块 受网络速度影响 cnpm淘宝镜像是从国内的服务器下载模块 速度较快
 #cnpm i nodemon -g  全局安装nodemon模块 自动重启js 不需要频繁的手动重启服务器 ctrl+c
 # 安装nodemon模块  当代码发生变化的时候 会自动重启服务器
+
+在根目录下创建app.js touch app.js 
+cnpm init -y 生成package.json配置文件
+
+1.安装需要的模块
+  cnpm i express --save
+  安装ejs模块
+  cnpm i ejs --save   渲染框架
+  cnpm i formidable --save  文件上传
+  cnpm i silly-datetime --save  时间日期
+  cnpm i rimraf --save  删除文件
+
+当你从远程仓库下载这个项目的时候 是下载不到node_modules文件的 因为我们通过.gitignore文件忽略上传这个文件了 
+所以可以通过 cnpm i命令 通过package.json文件中的依赖关系dependencies 自动下载需要的模块
+
+2.搭建项目结构
+  node_modules/  存放需要安装的模块
+  public/        存放需要的静态资源文件
+  uploads/       存放上传的图片文件
+  views/         存放ejs视图模板文件
+  route/         存放路由文件
+  model/         存放file操作的文件
+  app.js         服务器启动文件
+
+  视图中的路径按照设置的根目录去查找 因为是从浏览器发送请求 而我们设置了根目录
+  服务器端的js文件的路径按照启动文件的所在路径去查找
+  所以现在启动路径是app.js 如果在服务器端查找uploads文件夹 可以直接写uploads 不需要加当前路径 
+  vscode的提示的路径是按照photo的目录结构去查找的 跟服务器端的操作不一样
