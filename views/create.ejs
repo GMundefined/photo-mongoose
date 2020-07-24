@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线相册</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <style>
+    body{
+      padding-left: 20%;
+      padding-right: 20%;
+    }
+    h1{
+      color: lightcoral;
+      text-align: center;
+      text-decoration: underline;
+    }
+    .dir{}
+      padding: 0 40px;
+    }
+    .dir h2{
+      color: lightpink;
+    }
+    .dir button{
+      float: right;
+    }
+  </style>
+</head>
+<body>
+<h1>在线相册</h1>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">相册</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/dir/mkdir">新建相册</a></li>
+        <li><a href="/pic/upload">上传图片</a></li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="dir">
+  <h2>新建相册</h2>
+  <div class="form-group has-feedback has-error">
+    <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status" placeholder="请输入相册名称">
+    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+  </div>
+  <button class="btn btn-info" id="btn">创建</button>
+</div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script>
+  var dirName='';
+  //给input绑定输入监听事件
+  //在输入数据时 触发该事件
+  $('input').on('change',function(){
+    //获取输入框的数据  文件夹名称
+    var val=$(this).val().trim();
+    //发送请求 检查val是否已经存在
+    $.ajax({
+      url:"/dir/check?dirName="+val,
+      success:function(result){       
+        //修改状态小图标
+        if(result.status==0){
+          $('div.has-feedback').removeClass('has-error').addClass("has-success")
+          $('span.glyphicon').removeClass('glyphicon-remove').addClass("glyphicon-ok")
+          //给dirName赋值
+          dirName=val;
+        }else{
+          $('div.has-feedback').removeClass('has-success').addClass("has-error")
+          $('span.glyphicon').removeClass('glyphicon-ok').addClass("glyphicon-remove")
+          //给dirName重置
+          dirName="";
+          //弹框提示错误信息  放在这里 文件名合法就不会弹框 少一次弹框
+          alert(result.msg);
+        }
+        //弹框提示信息
+        // alert(result.msg);
+      }
+    }) 
+  })
+
+  //绑定单击事件 发送创建文件夹的请求
+  $('#btn').on('click',function(){
+    if(!dirName){
+      alert('相册名不能为空或已存在');
+      return ;
+    }
+    //发送创建文件夹请求
+    $.ajax({
+      url:"/dir/mkdir",
+      method:'post',
+      data:{dirName:dirName},
+      success:function(res){
+        alert(res.msg)
+        if(res.status==0){
+          //创建成功文件夹  跳转回首页
+          location.href='/';          
+        }
+        // console.log(res);
+
+      }
+    })
+  })
+</script>
+</body>
+</html>

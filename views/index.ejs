@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线相册</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <style>
+    body{
+      padding-left: 20%;
+      padding-right: 20%;
+    }
+    h1{
+      color: lightcoral;
+      text-align: center;
+      text-decoration: underline;
+    }
+    .allDir{
+      /* border:1px solid lightcoral; */
+      width: 100%;
+      display: flex;
+      /* justify-content: space-between; */
+      justify-content:start;
+      
+      flex-wrap: wrap;
+    }
+    .dir{
+      width: 30%;
+      text-align: center;
+      margin-left: 1%;
+      margin-right: 2%;
+    }
+    .dir img{
+      width: 100%;
+    }
+   
+  </style>
+</head>
+<body>
+<h1>在线相册</h1>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand " href="/">相册</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/dir/mkdir">新建相册</a></li>
+        <li><a href="/pic/upload">上传图片</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- 用来放所有的文件夹 -->
+<div class="allDir">
+  <% for(var i=0;i<dirs.length;i++){ %>
+  <div class="dir">
+    <a href="/pic/show?dirName=<%= dirs[i] %>">
+      <img src="/imgs/dir.jpg" class="img-thumbnail">
+      <h4><%= dirs[i] %></h4>
+    </a>
+    <a href="jacascript:;" onclick="send(this)">删除</a>
+  </div>
+  <% } %>
+</div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script>
+function send(i){
+  // console.log($(i).prev().html())
+  var dirName =$(i).prev().find('h4').html();
+  var res =confirm('确认删除相册:'+dirName+'吗?')
+  if(!res){//点击取消 即不删除
+    return ;
+  }
+  //点击确定 删除相册 发送请求给后台
+  $.ajax({
+    url:'/dir/delete?dirName='+dirName,
+    success:function(result){
+      alert(result.msg);
+      if(result.status==0){
+        //删除成功
+        // location.href='/';
+        $(i).parent().remove();//删除节点 不会重新刷新页面
+      }
+    }
+  })
+
+}
+</script>
+
+</body>
+</html>

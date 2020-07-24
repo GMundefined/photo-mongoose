@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>相册展示页</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <style>
+    body{
+      padding-left: 20%;
+      padding-right: 20%;
+    }
+    h1{
+      color: lightcoral;
+      text-align: center;
+      text-decoration: underline;
+    }
+    .pics h3{
+      color: lightslategray;
+    }
+    .pics img{
+      width: 32%;
+      height: 32%;
+      margin-bottom: 1%;
+    }
+  </style>
+</head>
+<body>
+<h1>在线相册</h1>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand " href="/">相册</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="false" style="height: 1px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/dir/mkdir">新建相册</a></li>
+        <li><a href="/pic/upload">上传图片</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- 图片展示区 -->
+<div class="pics">
+<h3><%= dirName %></h3>
+<% for(var i=0; i < files.length;i++){ %>
+<img src="/<%= dirName %>/<%= files[i] %>">
+<% } %>
+</div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+</body>
+</html>
