@@ -51,9 +51,9 @@
 </nav>
 <!-- 图片展示区 -->
 <div class="pics">
-<h3><%= dirName %></h3>
-<% for(var i=0; i < files.length;i++){ %>
-<img src="/<%= dirName %>/<%= files[i] %>">
+<h3><%= dir %></h3>
+<% for(var i=0; i < pics.length;i++){ %>
+<img src="/<%= dir %>/<%= pics[i].name %>">
 <% } %>
 </div>
 <script src="/js/jquery.min.js"></script>

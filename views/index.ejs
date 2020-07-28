@@ -62,11 +62,12 @@
 </nav>
 <!-- 用来放所有的文件夹 -->
 <div class="allDir">
+  <!-- dirs是一个对象数组 该对象有name -->
   <% for(var i=0;i<dirs.length;i++){ %>
   <div class="dir">
-    <a href="/pic/show?dirName=<%= dirs[i] %>">
+    <a href="/pic/show?dirName=<%= dirs[i].name %>">
       <img src="/imgs/dir.jpg" class="img-thumbnail">
-      <h4><%= dirs[i] %></h4>
+      <h4><%= dirs[i].name %></h4>
     </a>
     <a href="jacascript:;" onclick="send(this)">删除</a>
   </div>
